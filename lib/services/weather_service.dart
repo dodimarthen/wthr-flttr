@@ -28,7 +28,8 @@ class WeatherService {
     }
 
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+      forceAndroidLocationManager: true,
+        desiredAccuracy: LocationAccuracy.best);
 
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
