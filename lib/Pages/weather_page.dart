@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:wppy/services/weather_service.dart';
 import 'package:wppy/models/weather_model.dart';
 import 'package:wppy/services/api.dart';
@@ -30,6 +31,34 @@ class _WeatherPageState extends State<WeatherPage> {
     }
   }
 
+  String getWeatherAnimation(String? mainCondition) {
+  if (mainCondition == null) return 'assets/clearsky.json';
+
+  switch (mainCondition.toLowerCase()) {
+    case 'clear sky':
+      return 'assets/clearsky.json';
+    case 'few clouds':
+      return 'assets/fewclouds.json';
+    case 'scattered clouds':
+      return 'assets/scattered clouds.json';
+    case 'broken clouds':
+      return 'assets/broken clouds.json';
+    case 'shower rain':
+      return 'assets/showerrain.json';
+    case 'rain':
+      return 'assets/rain.json';
+    case 'thunderstorm':
+      return 'assets/thunderstorm.json';
+    case 'snow':
+      return 'assets/snow.json';  
+    case 'mist':
+      return 'assets/mist.json';
+    default:
+      return 'assets/clearsky.json';  
+    
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -46,7 +75,12 @@ class _WeatherPageState extends State<WeatherPage> {
         crossAxisAlignment: CrossAxisAlignment.center, // Centering the content horizontally
         children: [
           Text(_weather?.cityName ?? "City Undetected"),
+
+          Lottie.asset(getWeatherAnimation(_weather?.mainCondition)),
+
           Text('${_weather?.temperature.round()}°C'),
+
+          Text(_weather?.mainCondition ?? "")
         ],
       ),
     ),
